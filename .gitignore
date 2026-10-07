@@ -1,0 +1,18 @@
+# Entorno de Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Logs de cada quien (se quedan locales)
+logs/*.log
+
+# Modelos/matrices pesados de la etapa 2 (descomentar si pesan mucho)
+# models/*.pkl
+
+# Sistema / editores
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.env

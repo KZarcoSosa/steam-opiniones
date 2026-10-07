@@ -1,0 +1,10 @@
+{
+  "_comentario": "Cada integrante baja SOLO sus juegos (appid de Steam: el número en store.steampowered.com/app/<appid>/). Cambien la lista y los nombres a su gusto.",
+  "per_game": 60,
+  "languages": ["latam", "spanish"],
+  "members": {
+    "kevin":       [1091500, 1086940, 413150, 949230],
+    "angel": [730, 1245620, 367520, 892970],
+    "erick": [1145360, 105600, 2358720, 570]
+  }
+}
