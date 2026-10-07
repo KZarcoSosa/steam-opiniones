@@ -23,6 +23,7 @@ pip install -r requirements.txt
 
 # Cada integrante, SOLO con su nombre:
 python src/collect_steam.py --member kevin
+# Para rehacer tus archivos desde cero: --overwrite
 
 git checkout -b datos-kevin
 git add data/raw/kevin
@@ -49,5 +50,6 @@ git commit -m "Corpus congelado v1" && git tag corpus-v1 && git push --tags
 - Idiomas: `latam` (español de Latinoamérica) y `spanish` (español de España).
 - Pausa de 1.5 s entre peticiones, reintentos con espera ante errores/429, log de errores en `logs/`.
 - Se descartan reseñas de menos de 15 palabras.
+- Por juego se bajan 50 % negativas y 50 % positivas (`review_type`), ordenadas por utilidad (`filter=all`) para cubrir varios años. Si un juego no tiene suficientes negativas, se completa con positivas.
 - `rating`: Steam solo da recomendado (1) / no recomendado (0).
 - No se guarda el identificador del autor.
