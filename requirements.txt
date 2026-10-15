@@ -1,5 +1,5 @@
 requests>=2.31
 pandas>=2.0
-# Etapas siguientes:
-# spacy>=3.7   (python -m spacy download es_core_news_sm)
-# scikit-learn>=1.4
+spacy>=3.7
+scikit-learn>=1.4
+# Después de instalar: python -m spacy download es_core_news_sm

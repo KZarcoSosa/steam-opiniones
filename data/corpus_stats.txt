@@ -1,0 +1,62 @@
+Total de reseñas: 492  (duplicados eliminados: 0, excluidas por idioma/formato: 21 -> excluded_reviews.tsv)
+
+== Por juego ==
+item_name
+Dota 2                 41
+Counter-Strike 2       41
+Terraria               41
+Hollow Knight          41
+Stardew Valley         41
+Valheim                41
+Cities: Skylines II    41
+Baldur's Gate 3        41
+Cyberpunk 2077         41
+Hades                  41
+ELDEN RING             41
+Black Myth: Wukong     41
+
+== Por rating (1=Recomendado, 0=No recomendado) ==
+rating
+1    255
+0    237
+
+== Por idioma ==
+language
+latam      475
+spanish     17
+
+== Por año ==
+date
+2019      1
+2020     10
+2021     19
+2022     14
+2023     23
+2024     24
+2025     95
+2026    306
+
+== Por género ==
+Acción          328
+Rol             328
+Aventura        205
+Indie           205
+Estrategia       82
+Free to Play     82
+Simuladores      82
+
+== Por integrante ==
+collected_by
+erick    164
+angel    164
+kevin    164
+
+== Longitud (palabras) ==
+count     492.0
+mean       95.8
+std       169.6
+min        15.0
+25%        25.0
+50%        43.0
+75%        90.0
+max      1371.0

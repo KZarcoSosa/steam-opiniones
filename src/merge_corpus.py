@@ -24,6 +24,12 @@ ROOT = Path(__file__).resolve().parent.parent
 RAW_DIR = ROOT / "data" / "raw"
 OUT_TSV = ROOT / "data" / "opinions_raw_corpus.tsv"
 OUT_STATS = ROOT / "data" / "corpus_stats.txt"
+OUT_EXCLUDED = ROOT / "data" / "excluded_reviews.tsv"
+
+ES_WORDS = {"el", "la", "los", "las", "de", "que", "y", "en", "un", "una", "es", "no",
+            "por", "con", "para", "muy", "pero", "lo", "juego", "se", "del", "al", "mas", "más"}
+EN_WORDS = {"the", "and", "is", "it", "this", "of", "to", "game", "you", "but",
+            "with", "for", "was", "not", "have", "are", "very", "good"}
 
 COLUMNS = ["review_id", "item_id", "item_name", "review", "rating", "date",
            "category", "source", "url", "source_id", "language", "playtime_hours",
@@ -34,6 +40,22 @@ def tsv_safe(text: str) -> str:
     """Solo lo mínimo para que el TSV no se rompa (tabs/saltos de línea).
     La normalización real (tokenizar, lematizar, etc.) va en la etapa 2."""
     return re.sub(r"[\t\r\n]+", " ", text).strip()
+
+
+def exclusion_reason(text: str):
+    """Steam etiqueta el idioma por la cuenta del usuario, no por el texto:
+    a veces llegan reseñas en inglés o 'plantillas' de arte ASCII."""
+    words = re.findall(r"[a-záéíóúñü]+", text.lower())
+    if not words:
+        return "sin_texto"
+    letters = sum(c.isalpha() for c in text)
+    if letters / max(len(text), 1) < 0.5:
+        return "ascii_art_o_plantilla"
+    es = sum(w in ES_WORDS for w in words)
+    en = sum(w in EN_WORDS for w in words)
+    if en > es:
+        return "no_espanol"
+    return None
 
 
 def load_records():
@@ -66,6 +88,19 @@ def main():
         by_id.setdefault(r["recommendationid"], r)
     dups = len(records) - len(by_id)
     records = list(by_id.values())
+
+    excluded = []
+    kept = []
+    for r in records:
+        reason = exclusion_reason(r["review"])
+        if reason:
+            excluded.append({"source_id": r["recommendationid"], "item_name": r["item_name"],
+                             "reason": reason, "review": tsv_safe(r["review"])[:300]})
+        else:
+            kept.append(r)
+    records = kept
+    pd.DataFrame(excluded, columns=["source_id", "item_name", "reason", "review"]).to_csv(
+        OUT_EXCLUDED, sep="\t", index=False, encoding="utf-8")
 
     if args.max_per_game:
         rng = random.Random(args.seed)
@@ -107,7 +142,7 @@ def main():
     df.to_csv(OUT_TSV, sep="\t", index=False, encoding="utf-8")
 
     lines = [
-        f"Total de reseñas: {len(df)}  (duplicados eliminados: {dups})",
+        f"Total de reseñas: {len(df)}  (duplicados eliminados: {dups}, excluidas por idioma/formato: {len(excluded)} -> {OUT_EXCLUDED.name})",
         "",
         "== Por juego ==", df["item_name"].value_counts().to_string(),
         "",

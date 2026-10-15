@@ -16,3 +16,6 @@ Thumbs.db
 .vscode/
 .idea/
 .env
+
+# Archivos de trabajo para etiquetar (los qrels finales sí se suben)
+benchmark/pool/
