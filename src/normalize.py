@@ -24,8 +24,8 @@ Pasos aplicados a cada reseña (y, por separado, a "nombre del juego + reseña")
   4. Lematización (token.lemma_), paso a minúsculas y eliminación de acentos
      (optimización = optimizacion; la ñ se conserva).
 
-La función normalize_text() se reutiliza en search.py para normalizar las consultas
-EXACTAMENTE igual que el corpus (lo pide la sección 8).
+La función normalize_text() normaliza un texto suelto; servirá para normalizar
+las consultas EXACTAMENTE igual que el corpus (lo pide la sección 8).
 """
 import re
 import sys
@@ -43,6 +43,8 @@ MODEL = "es_core_news_sm"
 FUNCTION_POS = {"ADP", "CCONJ", "SCONJ", "PRON"}          # preposiciones, conjunciones, pronombres
 NOISE_POS = {"PUNCT", "SYM", "SPACE", "NUM"}
 # Palabras funcionales que no vienen en la lista de spaCy
+POSSESSIVES = {"mi", "mis", "tu", "tus", "su", "sus", "nuestro", "nuestra", "nuestros",
+               "nuestras", "vuestro", "vuestra", "vuestros", "vuestras"}
 EXTRA_FUNCTION_WORDS = {"cabe", "so", "versus", "vía", "cuyo", "cuya", "cuyos", "cuyas", "alguien", "vos"}
 
 _BBCODE = re.compile(r"\[/?[a-zA-Z0-9*]+(=[^\]]*)?\]")      # [h1] [/b] [url=...] [*]
@@ -92,6 +94,8 @@ def keep_token(tok) -> bool:
         pron_type = tok.morph.get("PronType")
         if ("Art" in pron_type or "Prs" in pron_type) and is_function_word(tok):
             return False
+        if tok.lower_ in POSSESSIVES:   # spaCy a veces marca "tus" como demostrativo
+            return False
     if not any(c.isalpha() for c in tok.text):
         return False
     return True
@@ -105,13 +109,22 @@ def strip_accents(word: str) -> str:
     return word.replace("\0", "ñ")
 
 
+def token_lemma(tok) -> str:
+    """Lema en minúsculas y sin acentos. Los verbos con pronombre pegado
+    ("jugarlo", "comprarlo") son UN token cuyo lema trae dos palabras
+    ("jugar él"); el pronombre se descarta igual que los demás pronombres."""
+    lemma = tok.lemma_.lower().strip()
+    if " " in lemma:
+        lemma = lemma.split()[0]
+    return strip_accents(lemma)
+
+
 def doc_to_tokens(doc):
-    return [strip_accents(tok.lemma_.lower().strip())
-            for tok in doc if keep_token(tok) and tok.lemma_.strip()]
+    return [token_lemma(tok) for tok in doc if keep_token(tok) and tok.lemma_.strip()]
 
 
 def normalize_text(text: str) -> str:
-    """Normaliza un solo texto (se usa para las consultas)."""
+    """Normaliza un solo texto (para consultas y demostraciones)."""
     return " ".join(doc_to_tokens(get_nlp()(clean_text(text))))
 
 
