@@ -1,0 +1,8 @@
+{
+  "version": "draft-v1",
+  "judgment_status": "AI-assisted draft; mandatory team review of annotation_audit.tsv",
+  "queries_sha256": "c2f37d73baacf7a6dfc792b7fae7e7d341f1a382dfd57bc1bfa159a5bce6ea0a",
+  "qrels_sha256": "dde872e0118cd9306761cb68b7d8e3271e146f5f036f1c19331b7ef2cb3cf152",
+  "corpus_sha256": "43cdd7f5f925f7cd5c3fd122199472dbeb9035469ac52a1dbb631e191961575c",
+  "note": "Hashes detect edits; do not claim human-validation until checked."
+}
