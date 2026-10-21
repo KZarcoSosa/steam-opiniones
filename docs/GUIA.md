@@ -1,3 +1,9 @@
+# Nota de actualización (21/10/2026)
+
+Esta guía corresponde a la versión original del proyecto (apartados 4–6). Las secciones 7–13 fueron implementadas posteriormente; consulta `../README.md` y `ANALISIS_CUMPLIMIENTO.md` para su estado actualizado y comandos.
+
+---
+
 # Guía del proyecto — Práctica II: Recuperación de opiniones
 
 ## 1. ¿De qué va la práctica?
