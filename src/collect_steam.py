@@ -1,19 +1,15 @@
+
+
 """
-Recolector de reseñas de Steam (API pública de reseñas, sin login ni API key).
+Módulo de recolección de reseñas desde la API pública de Steam.
 
-Uso:
-    python src/collect_steam.py --member kevin
-    python src/collect_steam.py --member kevin --per-game 80 --languages spanish latam
-    python src/collect_steam.py --member kevin --overwrite      # rehace tus archivos desde cero
-
-Lee los juegos asignados al integrante en config/apps.json y guarda, por juego,
-un archivo JSONL "crudo" en data/raw/<member>/<appid>.jsonl (texto original sin tocar).
-Esos JSONL son lo que se sube al repo; el TSV final lo arma merge_corpus.py.
-
-Endpoints usados (públicos, documentados por Valve):
-  - https://store.steampowered.com/appreviews/<appid>?json=1 ...
-  - https://store.steampowered.com/api/appdetails?appids=<appid>
+Etapas que cubre:
+1. Lee config/apps.json para determinar los juegos asignados al integrante.
+2. Consulta la API de Steam (appdetails y appreviews) con control de peticiones (rate limit).
+3. Equilibra la proporción de reseñas (50% positivas y 50% negativas) para evitar sesgos.
+4. Descarta reseñas cortas (<15 palabras) y almacena cada registro en JSONL sin alterar el texto.
 """
+
 import argparse
 import json
 import logging
@@ -28,20 +24,27 @@ CONFIG = ROOT / "config" / "apps.json"
 RAW_DIR = ROOT / "data" / "raw"
 LOG_DIR = ROOT / "logs"
 
+# Endpoints de la API pública de Steam
 REVIEWS_URL = "https://store.steampowered.com/appreviews/{appid}"
 DETAILS_URL = "https://store.steampowered.com/api/appdetails"
+
+# Encabezado HTTP para identificar el proyecto ante los servidores de Steam
 HEADERS = {"User-Agent": "PLN-Practica2-OpinionRetrieval/1.0 (proyecto escolar)"}
-SLEEP_S = 1.5          # pausa entre peticiones para respetar límites
-MAX_RETRIES = 4
-DAY_RANGE = 365       # ventana máxima documentada por Steam para filter=all
-MIN_WORDS = 15         # reseñas más cortas ("10/10", "buen juego") no sirven para recuperación
+
+# Parámetros de cortesía y control de tráfico
+SLEEP_S = 1.5          # Pausa de 1.5s entre peticiones para respetar los límites de la API
+MAX_RETRIES = 4        # Intentos máximos antes de descartar una petición fallida
+DAY_RANGE = 365       # Ventana temporal en días para filter=all (evita traer solo del último mes)
+MIN_WORDS = 15         # Umbral mínimo: descarta reseñas no informativas ("10/10", "bueno", etc.)
 
 
 def get_json(url, params, log):
+    """Realiza una petición GET con reintentos y retroceso exponencial ante rate limits (HTTP 429)."""
     for attempt in range(1, MAX_RETRIES + 1):
         try:
             r = requests.get(url, params=params, headers=HEADERS, timeout=30)
             if r.status_code == 429:
+                # Si Steam nos bloquea temporalmente por exceso de peticiones, esperamos
                 wait = 30 * attempt
                 log.warning("429 (rate limit) en %s, esperando %ss", url, wait)
                 time.sleep(wait)
@@ -55,6 +58,7 @@ def get_json(url, params, log):
 
 
 def get_app_details(appid, log):
+    """Obtiene metadatos del juego (nombre oficial y lista de géneros) en español."""
     data = get_json(DETAILS_URL, {"appids": appid, "l": "spanish"}, log)
     time.sleep(SLEEP_S)
     try:
@@ -67,9 +71,11 @@ def get_app_details(appid, log):
 
 
 def collect_app(appid, languages, per_game, out_path, log, review_filter="all", negative_share=0.5):
-    """Baja reseñas negativas y positivas por separado para no quedar con un corpus
-    95 % positivo. review_filter='all' = ordenadas por utilidad (abarcan varios años);
-    'recent' = las más nuevas."""
+    """Coordina la descarga balanceada de reseñas para un juego específico.
+    
+    Separa la búsqueda en positivas y negativas para evitar que el corpus
+    quede desbalanceado (usualmente 90%+ de las reseñas en Steam son positivas).
+    """
     name, genres = get_app_details(appid, log)
     seen = set()
     counts = {"negative": 0, "positive": 0}
@@ -105,12 +111,17 @@ def collect_app(appid, languages, per_game, out_path, log, review_filter="all", 
 
 def _collect(appid, name, genres, lang, review_type, review_filter, target, counts, seen, out, log):
     """Pagina la API para un idioma y tipo (negative/positive) hasta llegar a target."""
+    # Cursor '*' indica a la API de Steam que inicie desde la primera página
     cursor, pages = "*", 0
     while counts[review_type] < target:
         params = {
-            "json": 1, "filter": review_filter, "language": lang,
-            "review_type": review_type, "purchase_type": "all",
-            "num_per_page": 100, "cursor": cursor,
+            "json": 1,
+            "filter": review_filter,       # 'all' (más útiles) o 'recent' (más recientes)
+            "language": lang,              # 'spanish' o 'latam'
+            "review_type": review_type,    # 'positive' o 'negative'
+            "purchase_type": "all",        # compras en Steam o claves activadas
+            "num_per_page": 100,           # máximo permitido por petición por Steam
+            "cursor": cursor,              # puntero a la siguiente página devuelto por Steam
         }
         if review_filter == "all":
             # Sin esto Steam solo busca en los últimos ~30 días (de ahí que todo saliera de 2026)
@@ -123,10 +134,13 @@ def _collect(appid, name, genres, lang, review_type, review_filter, target, coun
         reviews = data.get("reviews", [])
         if not reviews:
             break
+        # Timestamp ISO UTC de cuando se capturó la reseña
         retrieved_at = datetime.now(timezone.utc).isoformat(timespec="seconds")
         for rv in reviews:
             rid = rv["recommendationid"]
             text = rv.get("review", "")
+            # Filtro 1: evitar duplicados ya vistos
+            # Filtro 2: descartar reseñas de menos de 15 palabras (ruido/sin contenido útil)
             if rid in seen or len(text.split()) < MIN_WORDS:
                 continue
             seen.add(rid)
@@ -137,8 +151,8 @@ def _collect(appid, name, genres, lang, review_type, review_filter, target, coun
                 "genres": genres,
                 "language": rv.get("language", lang),
                 "review": text,                      # texto original sin modificar
-                "voted_up": rv.get("voted_up"),
-                "votes_up": rv.get("votes_up"),
+                "voted_up": rv.get("voted_up"),      # True = recomendado (positivo), False = no recomendado
+                "votes_up": rv.get("votes_up"),      # usuarios que encontraron útil la reseña
                 "votes_funny": rv.get("votes_funny"),
                 "playtime_at_review_min": rv.get("author", {}).get("playtime_at_review"),
                 "timestamp_created": rv.get("timestamp_created"),
@@ -148,11 +162,13 @@ def _collect(appid, name, genres, lang, review_type, review_filter, target, coun
                 "retrieved_at": retrieved_at,
                 # No guardamos steamid del autor: no hace falta y evita datos personales.
             }
+            # Guardamos como una línea JSON independiente (formato JSONL)
             out.write(json.dumps(record, ensure_ascii=False) + "\n")
             counts["positive" if record["voted_up"] else "negative"] += 1
             if counts[review_type] >= target:
                 break
         pages += 1
+        # Steam devuelve un nuevo cursor codificado en base64 para la página siguiente
         new_cursor = data.get("cursor")
         if not new_cursor or new_cursor == cursor:
             break
