@@ -5,11 +5,11 @@ Interfaz del proyecto (sección 10: comandos claramente separados).
     python main.py merge                       #    Unir lo de los 3 -> opinions_raw_corpus.tsv
     python main.py normalize                   # 2. Normalización -> opinions_normalized_corpus.tsv
     python main.py vectorize                  # 3. Doce representaciones VSM
-    python main.py search --query "juego con errores" --content review --features unigram --weight tfidf
+    python main.py search --query "juego con errores" --content review --features unigram --weight tfidf (Ejemplo)
     python main.py benchmark                  # 4. Benchmark y métricas
     python main.py report                     # 5. Reporte PDF
     python main.py demo [--id 416 | --text "..." | --stats]
-                                               #    Demostración paso a paso de la normalización
+                                               #    Demostración de la normalización
 
 Cada comando solo llama al script correspondiente en src/, que también se
 puede ejecutar por separado.
