@@ -3,6 +3,10 @@
 Ejemplo:
 python main.py search --query "se me cae el rendimiento y hay tirones" --content review \\
   --features unigram --weight tfidf
+
+Por nivel del benchmark (corre las 5 consultas de ese nivel y marca las relevantes):
+python main.py search --nivel 1 --features bigram --weight tfidf
+python main.py search --qid Q02 --features bigram --weight tfidf
 """
 import argparse
 import json
@@ -22,6 +26,9 @@ except ImportError:
     from vectorize import ROOT, CORPUS, MODELS, artifact_name, checksum, load_corpus
 
 RAW = ROOT / 'data' / 'opinions_raw_corpus.tsv'
+QUERIES = ROOT / 'data' / 'benchmark' / 'queries.tsv'
+QRELS = ROOT / 'data' / 'benchmark' / 'qrels.tsv'
+LEVEL = {'1': 'fácil', '2': 'media', '3': 'difícil'}
 
 
 def load_model(content='review', features='unigram', weight='tfidf'):
@@ -75,9 +82,56 @@ def search(query, content='review', features='unigram', weight='tfidf', top=10):
     return qnorm, results
 
 
+def print_results(qnorm, results, args, rels=None):
+    print(f'Consulta normalizada: {qnorm}')
+    print(f'Comparación: {args.content} | {args.features} | {args.weight}')
+    for item in results:
+        short = ' '.join(item['review'].split())[:300]
+        mark = ''
+        if rels is not None:
+            r = rels.get(item['document_id'], 0)
+            mark = f'  [relevancia={r}]' if r else '  [no relevante]'
+        print(f"\n{item['rank']:2d}. doc={item['document_id']}  coseno={item['score']:.5f} "
+              f"| {item['item_name']} | rating={item['rating']}{mark}\n    {short}")
+
+
+def run_benchmark_queries(args):
+    q = pd.read_csv(QUERIES, sep='\t', dtype=str)
+    qrels = pd.read_csv(QRELS, sep='\t', dtype=str)
+    q = q[q.query_id == args.qid.upper()] if args.qid else q[q.difficulty_level == args.nivel]
+    if q.empty:
+        raise SystemExit('No hay consultas con ese nivel o ID.')
+    summary = []
+    for row in q.itertuples():
+        rels = {d: int(r) for d, r in qrels[qrels.query_id == row.query_id]
+                [['document_id', 'relevance']].itertuples(index=False) if int(r) > 0}
+        print('\n' + '#' * 100)
+        print(f'{row.query_id} | nivel {row.difficulty_level} ({LEVEL[row.difficulty_level]}) | {row.query}')
+        print('#' * 100)
+        try:
+            qnorm, results = search(row.query, args.content, args.features, args.weight, args.top)
+        except ValueError as e:
+            print(e); summary.append((row.query_id, row.query, 0, len(rels))); continue
+        print_results(qnorm, results, args, rels)
+        hits = sum(1 for it in results if it['document_id'] in rels)
+        print(f'\n  -> {hits} de {len(results)} resultados son relevantes '
+              f'(P@{args.top} = {hits / args.top:.2f}); el benchmark tiene {len(rels)} relevantes.')
+        summary.append((row.query_id, row.query, hits, len(rels)))
+    if len(summary) > 1:
+        print('\n' + '=' * 100)
+        print(f'RESUMEN | {args.content} | {args.features} | {args.weight}')
+        print('=' * 100)
+        for qid, text, hits, n in sorted(summary, key=lambda x: -x[2]):
+            print(f'{qid}  P@{args.top} {hits / args.top:.2f}  ({hits}/{args.top}, {n} relevantes)  {text}')
+        print(f'Promedio P@{args.top}: {sum(h for _, _, h, _ in summary) / (args.top * len(summary)):.3f}')
+
+
 def main():
     parser = argparse.ArgumentParser(description='Busca las 10 opiniones más similares con VSM + coseno')
-    parser.add_argument('--query', required=True, help='Consulta libre en español')
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('--query', help='Consulta libre en español')
+    group.add_argument('--nivel', choices=['1', '2', '3'], help='Corre las consultas del benchmark de ese nivel')
+    group.add_argument('--qid', help='Corre una consulta del benchmark por su ID (p. ej. Q02)')
     parser.add_argument('--content', choices=['review', 'item_review'], default='review')
     parser.add_argument('--features', choices=['unigram', 'bigram'], default='unigram')
     parser.add_argument('--weight', choices=['frequency', 'binary', 'tfidf'], default='tfidf')
@@ -85,13 +139,10 @@ def main():
     args = parser.parse_args()
     if args.top <= 0:
         parser.error('--top debe ser positivo')
+    if args.nivel or args.qid:
+        return run_benchmark_queries(args)
     qnorm, results = search(args.query, args.content, args.features, args.weight, args.top)
-    print(f'Consulta normalizada: {qnorm}')
-    print(f'Comparación: {args.content} | {args.features} | {args.weight}')
-    for item in results:
-        short = ' '.join(item['review'].split())[:300]
-        print(f"\n{item['rank']:2d}. doc={item['document_id']}  coseno={item['score']:.5f} "
-              f"| {item['item_name']} | rating={item['rating']}\n    {short}")
+    print_results(qnorm, results, args)
 
 
 if __name__ == '__main__':

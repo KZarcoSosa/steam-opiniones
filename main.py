@@ -6,8 +6,10 @@ Interfaz del proyecto (sección 10: comandos claramente separados).
     python main.py normalize                   # 2. Normalización -> opinions_normalized_corpus.tsv
     python main.py vectorize                  # 3. Doce representaciones VSM
     python main.py search --query "juego con errores" --content review --features unigram --weight tfidf (Ejemplo)
+    python main.py search --nivel 1 --features unigram --weight tfidf   # las 5 consultas de un nivel
     python main.py benchmark                  # 4. Benchmark y métricas
-    python main.py report                     # 5. Reporte PDF
+    python main.py casos [--nivel 1|2|3 | --por-nivel]
+                                               #    Mejores y peores (salida del evaluador oficial)
     python main.py demo [--id 416 | --text "..." | --stats]
                                                #    Demostración de la normalización
 
@@ -27,7 +29,7 @@ COMMANDS = {
     "vectorize": "vectorize.py",
     "search": "retrieve.py",
     "benchmark": "benchmark.py",
-    "report": "report.py",
+    "casos": "best_worst.py",
 }
 
 
