@@ -2,7 +2,7 @@
 
 Buscador de opiniones con el **Modelo de Espacio Vectorial (VSM)** y **similitud coseno** sobre **492 reseñas de Steam en español** de **12 videojuegos**. El usuario escribe un aspecto o experiencia en texto libre y el sistema devuelve el **Top-10** de reseñas más parecidas.
 
-**Equipo:** Lecanda Castillo Ángel · Ruiz Martines Erick · Zarco Sosa Kevin
+**Equipo:** Lecanda Castillo Ángel · Ruiz Martinez Erick · Zarco Sosa Kevin
 
 📄 **Reporte:** [`docs/reporte.pdf`](docs/reporte.pdf) 
 **Enunciado:** `05_Opinion_Retrieval_Project_Stage_1.pdf`
