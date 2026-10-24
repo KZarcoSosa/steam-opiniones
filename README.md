@@ -4,7 +4,7 @@ Buscador de opiniones con el **Modelo de Espacio Vectorial (VSM)** y **similitud
 
 **Equipo:** Lecanda Castillo Ángel · Ruiz Martines Erick · Zarco Sosa Kevin
 
-📄 **Reporte:** [`docs/reporte.pdf`](docs/reporte.pdf) (versión editable: [`docs/reporte_etapa1.docx`](docs/reporte_etapa1.docx))
+📄 **Reporte:** [`docs/reporte.pdf`](docs/reporte.pdf) 
 **Enunciado:** `05_Opinion_Retrieval_Project_Stage_1.pdf`
 
 ---
