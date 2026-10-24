@@ -11,7 +11,7 @@ Buscador de opiniones con el **Modelo de Espacio Vectorial (VSM)** y **similitud
 
 ## Dónde está cada entregable (sección 11 — Evidencias)
 
-| Lo que pide el documento | Archivo / carpeta | Notas |
+| Entregables | Archivo / carpeta | Notas |
 |---|---|---|
 | **Código fuente** | [`main.py`](main.py), [`src/`](src) | Un script por etapa (ver tabla de comandos) |
 | **Corpus crudo** (sec. 5) | [`data/opinions_raw_corpus.tsv`](data/opinions_raw_corpus.tsv) | 492 reseñas con todos los campos de la sec. 5 (`review_id`, `item_id`, `item_name`, `review`, `rating`, `date`, `category`, `source`, `url`, …) |
@@ -28,7 +28,7 @@ Buscador de opiniones con el **Modelo de Espacio Vectorial (VSM)** y **similitud
 | **Salida del evaluador del profesor** | [`data/results/evaluacion_profesor/`](data/results/evaluacion_profesor) | `salida_evaluador.txt` (lo que imprime) y `evaluation_results.tsv`. El script original, sin modificar, está en [`tools/evaluador_profesor/`](tools/evaluador_profesor) |
 | Comparación de las 12 configuraciones | [`data/results/all_configurations.tsv`](data/results/all_configurations.tsv) | Métricas promedio de cada combinación |
 | **Análisis de errores** (sec. 12) | Sección 9 del reporte y [`docs/analisis_errores.tsv`](docs/analisis_errores.tsv) | 5 consultas con mejor y 5 con peor desempeño, con la causa de cada una (evidencia automática en [`data/results/error_analysis_draft.tsv`](data/results/error_analysis_draft.tsv)) |
-| **Documento PDF** (resultados, análisis de errores, integrantes) | **[`docs/reporte.pdf`](docs/reporte.pdf)** · versión editable [`docs/reporte_etapa1.docx`](docs/reporte_etapa1.docx) | Portada, corpus, normalización, representaciones, benchmark, resultados, evaluador oficial, comparación de las 12 configuraciones y análisis de errores |
+| **Documento PDF** (resultados, análisis de errores, integrantes) | **[`docs/reporte.pdf`](docs/reporte.pdf)**  | Portada, corpus, normalización, representaciones, benchmark, resultados, evaluador oficial, comparación de las 12 configuraciones y análisis de errores |
 | Explicación detallada del proceso | [`docs/GUIA.md`](docs/GUIA.md) | Recolección y normalización paso a paso |
 
 ---
