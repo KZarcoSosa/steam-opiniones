@@ -30,6 +30,13 @@ COMMANDS = {
     "search": "retrieve.py",
     "benchmark": "benchmark.py",
     "casos": "best_worst.py",
+    #python main.py labels # Etapa II: etiquetas y particiones.
+    "labels": "sentiment_labels.py",
+    "features": "sentiment_features.py",
+    "experiments": "sentiment_experiments.py",
+    "final-test": "sentiment_final.py",
+    "sentiment": "sentiment_app.py",
+    "incremental": "sentiment_incremental.py",
 }
 
 

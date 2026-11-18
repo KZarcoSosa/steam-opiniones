@@ -63,13 +63,32 @@ def rank_normalized_query(normalized_query, df, vectorizer, matrix):
     return [(str(df.review_id.iloc[i]), float(sims[i])) for i in order]
 
 
-def search(query, content='review', features='unigram', weight='tfidf', top=10):
+# --- Etapa II: sentimiento predicho (opcional) ---
+SENT_ES = {'positive': 'positivo', 'negative': 'negativo'}
+
+
+def _sentiment_map():
+    """{review_id: (etiqueta, margen, split)} o None si aún no se ejecutó: python main.py sentiment predict"""
+    try:
+        import sentiment_app
+    except ImportError:
+        return None
+    return sentiment_app.load_predictions()
+
+
+def search(query, content='review', features='unigram', weight='tfidf', top=10, sentiment=None):
     # EXACTAMENTE la misma función utilizada para producir el corpus normalizado.
     qnorm = normalize_text(query)
     if not qnorm:
         raise ValueError('La consulta no contiene términos tras la normalización.')
     df, vectorizer, matrix = load_model(content, features, weight)
     ranking = rank_normalized_query(qnorm, df, vectorizer, matrix)
+    sent = _sentiment_map()
+    if sentiment:  # Etapa II: se filtra el ranking completo y luego se toman los `top`
+        if sent is None:
+            raise RuntimeError('No hay predicciones de sentimiento. Ejecuta: python main.py sentiment predict')
+        wanted = {'positivo': 'positive', 'negativo': 'negative'}[sentiment]
+        ranking = [(d, s) for d, s in ranking if sent[d][0] == wanted]
     raw = pd.read_csv(RAW, sep='\t', dtype=str, keep_default_na=False).set_index('review_id')
     results = []
     for position, (doc_id, score) in enumerate(ranking[:top], 1):
@@ -78,13 +97,16 @@ def search(query, content='review', features='unigram', weight='tfidf', top=10):
         row = raw.loc[doc_id]
         results.append({'rank': position, 'document_id': doc_id, 'score': score,
                         'item_name': row.item_name, 'rating': row.rating,
-                        'review': row.review, 'url': row.url})
+                        'review': row.review, 'url': row.url,
+                        'sentiment': SENT_ES[sent[doc_id][0]] if sent else None})
     return qnorm, results
 
 
 def print_results(qnorm, results, args, rels=None):
     print(f'Consulta normalizada: {qnorm}')
     print(f'Comparación: {args.content} | {args.features} | {args.weight}')
+    if getattr(args, 'sentimiento', None):
+        print(f'Filtro Etapa II: solo opiniones con sentimiento predicho {args.sentimiento}')
     for item in results:
         short = ' '.join(item['review'].split())[:300]
         mark = ''
@@ -92,7 +114,8 @@ def print_results(qnorm, results, args, rels=None):
             r = rels.get(item['document_id'], 0)
             mark = f'  [relevancia={r}]' if r else '  [no relevante]'
         print(f"\n{item['rank']:2d}. doc={item['document_id']}  coseno={item['score']:.5f} "
-              f"| {item['item_name']} | rating={item['rating']}{mark}\n    {short}")
+              f"| {item['item_name']} | rating={item['rating']}"
+              f"{' | sentimiento predicho=' + item['sentiment'] if item.get('sentiment') else ''}{mark}\n    {short}")
 
 
 def run_benchmark_queries(args):
@@ -136,12 +159,14 @@ def main():
     parser.add_argument('--features', choices=['unigram', 'bigram'], default='unigram')
     parser.add_argument('--weight', choices=['frequency', 'binary', 'tfidf'], default='tfidf')
     parser.add_argument('--top', type=int, default=10)
+    parser.add_argument('--sentimiento', choices=['positivo', 'negativo'],
+                        help='Etapa II: mostrar solo opiniones con ese sentimiento predicho')
     args = parser.parse_args()
     if args.top <= 0:
         parser.error('--top debe ser positivo')
     if args.nivel or args.qid:
         return run_benchmark_queries(args)
-    qnorm, results = search(args.query, args.content, args.features, args.weight, args.top)
+    qnorm, results = search(args.query, args.content, args.features, args.weight, args.top, args.sentimiento)
     print_results(qnorm, results, args)
 
 

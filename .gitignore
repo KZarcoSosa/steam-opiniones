@@ -17,3 +17,6 @@ Thumbs.db
 
 # Archivos temporales de Word
 ~$*
+
+data/stage2/cache/
+resources/lexicons/LIWC2007.dic
