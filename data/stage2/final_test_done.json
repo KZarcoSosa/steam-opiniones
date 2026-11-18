@@ -1,0 +1,8 @@
+{
+  "done_utc": "2026-11-16T21:15:51+00:00",
+  "selected_experiment": "C014",
+  "model": "LinearSVC",
+  "selection": "autom\u00e1tica del ejecutor (macro-F1 en dev; desempate: m\u00e1s simple, luego CV en train)",
+  "test_macro_f1": 0.7421,
+  "best_by_model_sha256": "109975f28e6e25e544006344f532649c7d5a6d93941ceca96822bf12e1461319"
+}

@@ -1,0 +1,5 @@
+experiment_id	model	split	accuracy	macro_precision	macro_recall	macro_f1	precision_negative	recall_negative	f1_negative	support_negative	precision_positive	recall_positive	f1_positive	support_positive	cm_tn	cm_fp	cm_fn	cm_tp
+C008	LogisticRegression	dev	0.7432	0.7427	0.7432	0.7428	0.7222	0.7429	0.7324	35	0.7632	0.7436	0.7532	39	26	9	10	29
+C014	LinearSVC	dev	0.7432	0.7442	0.7447	0.7432	0.7105	0.7714	0.7397	35	0.7778	0.7179	0.7467	39	27	8	11	28
+C030	MultinomialNB	dev	0.7432	0.7442	0.7447	0.7432	0.7105	0.7714	0.7397	35	0.7778	0.7179	0.7467	39	27	8	11	28
+test	LinearSVC	test	0.7432	0.7446	0.7420	0.7421	0.7576	0.6944	0.7246	36	0.7317	0.7895	0.7595	38	25	11	8	30

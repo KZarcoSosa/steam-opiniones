@@ -1,0 +1,41 @@
+=== C008 LogisticRegression | tokenización+minúsculas | ninguna | binary ngram=(1, 2) | C=0.1
+              precision    recall  f1-score   support
+
+    negative     0.7222    0.7429    0.7324        35
+    positive     0.7632    0.7436    0.7532        39
+
+    accuracy                         0.7432        74
+   macro avg     0.7427    0.7432    0.7428        74
+weighted avg     0.7438    0.7432    0.7434        74
+
+Matriz de confusión (filas=real, columnas=predicho; orden ['negative', 'positive']):
+[[26  9]
+ [10 29]]
+
+=== C014 LinearSVC | tokenización+minúsculas | ninguna | binary ngram=(1, 2) | C=0.1
+              precision    recall  f1-score   support
+
+    negative     0.7105    0.7714    0.7397        35
+    positive     0.7778    0.7179    0.7467        39
+
+    accuracy                         0.7432        74
+   macro avg     0.7442    0.7447    0.7432        74
+weighted avg     0.7460    0.7432    0.7434        74
+
+Matriz de confusión (filas=real, columnas=predicho; orden ['negative', 'positive']):
+[[27  8]
+ [11 28]]
+
+=== C030 MultinomialNB | lematización | negación | binary ngram=(1, 1) | alpha=1.0
+              precision    recall  f1-score   support
+
+    negative     0.7105    0.7714    0.7397        35
+    positive     0.7778    0.7179    0.7467        39
+
+    accuracy                         0.7432        74
+   macro avg     0.7442    0.7447    0.7432        74
+weighted avg     0.7460    0.7432    0.7434        74
+
+Matriz de confusión (filas=real, columnas=predicho; orden ['negative', 'positive']):
+[[27  8]
+ [11 28]]

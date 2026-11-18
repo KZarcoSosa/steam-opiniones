@@ -1,0 +1,19 @@
+EVALUACIÓN FINAL EN TEST (única)
+Generado (UTC): 2026-11-16T21:15:50+00:00
+Modelo: LinearSVC | selección en dev: C014 (macro-F1 dev=0.7432)
+Criterio de selección: automática del ejecutor (macro-F1 en dev; desempate: más simple, luego CV en train)
+Normalización: tokenización+minúsculas | Mejoras: ninguna | binary ngram=(1, 2) | {'C': 0.1}
+Reajustado con train+dev: 418 documentos | test: 74 documentos
+
+              precision    recall  f1-score   support
+
+    negative     0.7576    0.6944    0.7246        36
+    positive     0.7317    0.7895    0.7595        38
+
+    accuracy                         0.7432        74
+   macro avg     0.7446    0.7420    0.7421        74
+weighted avg     0.7443    0.7432    0.7425        74
+
+Matriz de confusión (filas=real, columnas=predicho; orden ['negative', 'positive']):
+[[25 11]
+ [ 8 30]]

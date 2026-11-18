@@ -1,0 +1,46 @@
+REPORTE DE ETIQUETAS Y PARTICIONES - Etapa II
+Generado (UTC): 2026-11-12T03:11:05+00:00
+Corpus crudo: opinions_raw_corpus.tsv  sha256=43cdd7f5f925f7cd5c3fd122199472dbeb9035469ac52a1dbb631e191961575c
+Python 3.12.3 | pandas 3.0.6 | scikit-learn 1.9.1
+Semilla: random_state=0, shuffle=True, estratificado por etiqueta; proporciones 70%/15%/15%
+
+== Definición de la etiqueta ==
+Fuente: Steam (voted_up). rating=1 -> positive (Recomendado); rating=0 -> negative (No recomendado).
+No hay clase neutral porque la fuente solo ofrece recomendación binaria.
+Reseñas sin rating: 0 | usadas: 492
+
+== Distribución de clases por partición ==
+label  negative  positive  All
+split                         
+train       166       178  344
+dev          35        39   74
+test         36        38   74
+All         237       255  492
+
+== Proporción de clases por partición (%) ==
+label  negative  positive
+split                    
+train      48.3      51.7
+dev        47.3      52.7
+test       48.6      51.4
+
+== Distribución por juego y partición (no se estratificó por juego; se reporta) ==
+split                train  dev  test
+item_name                            
+Baldur's Gate 3         30    5     6
+Black Myth: Wukong      30    3     8
+Cities: Skylines II     27    7     7
+Counter-Strike 2        21   13     7
+Cyberpunk 2077          29    9     3
+Dota 2                  32    3     6
+ELDEN RING              30    4     7
+Hades                   28    7     6
+Hollow Knight           29    5     7
+Stardew Valley          29    4     8
+Terraria                32    7     2
+Valheim                 27    7     7
+
+== Revisión manual de etiquetas ==
+label_audit_sample.tsv: 50 filas (30 candidatas por señales contradictorias + 20 de control).
+Pendiente: el equipo llena manual_label/comment. Las etiquetas NO se corrigen: se conserva la
+recomendación explícita de la fuente y se reporta el porcentaje de desacuerdo.

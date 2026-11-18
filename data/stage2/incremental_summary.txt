@@ -1,0 +1,65 @@
+IMPACTO DE CADA PREPROCESAMIENTO (cadena incremental)
+CV: RepeatedStratifiedKFold(5 pliegues x 5 repeticiones, seed=0) sobre train (344 reseñas), 25 particiones pareadas
+Representación e hiperparámetros fijos por clasificador; solo cambia el preprocesamiento. Test no se usa.
+
+== MultinomialNB ==
+  S0_base           CV 0.7593  dev 0.7027  
+  S1_repeticiones   CV 0.7606  dev 0.7027  Δprev +0.0012 [-0.0092,+0.0116] p=0.81 (5/25) -> sin cambio apreciable; Δbase +0.0012
+  S2_negacion       CV 0.8006  dev 0.7428  Δprev +0.0401 [-0.0029,+0.0831] p=0.07 (20/25) -> tendencia a mejorar (no concluyente); Δbase +0.0413
+  S3_lexicos        CV 0.8012  dev 0.7295  Δprev +0.0005 [-0.0067,+0.0078] p=0.88 (4/25) -> sin cambio apreciable; Δbase +0.0418
+  S4_lemas          CV 0.8092  dev 0.7566  Δprev +0.0081 [-0.0409,+0.0571] p=0.74 (14/25) -> tendencia a mejorar (no concluyente); Δbase +0.0499
+  S5_ortografia     CV 0.8112  dev 0.7025  Δprev +0.0019 [-0.0302,+0.0341] p=0.90 (14/25) -> sin cambio apreciable; Δbase +0.0518
+  S6_funcionales    CV 0.7996  dev 0.7432  Δprev -0.0116 [-0.0471,+0.0239] p=0.51 (9/25) -> tendencia a empeorar (no concluyente); Δbase +0.0402
+
+== LogisticRegression ==
+  S0_base           CV 0.7246  dev 0.7428  
+  S1_repeticiones   CV 0.7264  dev 0.7295  Δprev +0.0018 [-0.0067,+0.0104] p=0.66 (5/25) -> sin cambio apreciable; Δbase +0.0018
+  S2_negacion       CV 0.7325  dev 0.7428  Δprev +0.0062 [-0.0212,+0.0335] p=0.65 (13/25) -> tendencia a mejorar (no concluyente); Δbase +0.0080
+  S3_lexicos        CV 0.7343  dev 0.7428  Δprev +0.0018 [-0.0056,+0.0091] p=0.62 (4/25) -> sin cambio apreciable; Δbase +0.0097
+  S4_lemas          CV 0.7425  dev 0.7137  Δprev +0.0082 [-0.0319,+0.0483] p=0.68 (13/25) -> tendencia a mejorar (no concluyente); Δbase +0.0179
+  S5_ortografia     CV 0.7470  dev 0.7007  Δprev +0.0046 [-0.0229,+0.0320] p=0.73 (10/25) -> sin cambio apreciable; Δbase +0.0225
+  S6_funcionales    CV 0.7494  dev 0.7157  Δprev +0.0024 [-0.0386,+0.0434] p=0.91 (14/25) -> sin cambio apreciable; Δbase +0.0249
+
+== LinearSVC ==
+  S0_base           CV 0.7424  dev 0.7432  
+  S1_repeticiones   CV 0.7412  dev 0.7295  Δprev -0.0012 [-0.0115,+0.0092] p=0.81 (4/25) -> sin cambio apreciable; Δbase -0.0012
+  S2_negacion       CV 0.7427  dev 0.6891  Δprev +0.0015 [-0.0343,+0.0373] p=0.93 (14/25) -> sin cambio apreciable; Δbase +0.0003
+  S3_lexicos        CV 0.7410  dev 0.7027  Δprev -0.0017 [-0.0102,+0.0067] p=0.68 (1/25) -> sin cambio apreciable; Δbase -0.0014
+  S4_lemas          CV 0.7545  dev 0.6747  Δprev +0.0135 [-0.0294,+0.0564] p=0.52 (16/25) -> tendencia a mejorar (no concluyente); Δbase +0.0120
+  S5_ortografia     CV 0.7608  dev 0.7289  Δprev +0.0063 [-0.0231,+0.0357] p=0.66 (12/25) -> tendencia a mejorar (no concluyente); Δbase +0.0184
+  S6_funcionales    CV 0.7389  dev 0.7289  Δprev -0.0219 [-0.0769,+0.0330] p=0.42 (7/25) -> tendencia a empeorar (no concluyente); Δbase -0.0035
+
+DEJAR UNO FUERA (aporte = completo - sin el factor)
+== MultinomialNB ==
+  sin repeticiones           aporte CV +0.0029 [-0.0052,+0.0111] p=0.46 -> sin cambio apreciable
+  sin negación               aporte CV +0.0262 [-0.0126,+0.0649] p=0.18 -> tendencia a mejorar (no concluyente)
+  sin léxicos                aporte CV -0.0018 [-0.0115,+0.0080] p=0.71 -> sin cambio apreciable
+  sin lemas                  aporte CV +0.0157 [-0.0138,+0.0451] p=0.28 -> tendencia a mejorar (no concluyente)
+  sin ortografía             aporte CV +0.0098 [-0.0222,+0.0419] p=0.53 -> tendencia a mejorar (no concluyente)
+  sin palabras funcionales   aporte CV -0.0116 [-0.0471,+0.0239] p=0.51 -> tendencia a empeorar (no concluyente)
+
+== LogisticRegression ==
+  sin repeticiones           aporte CV -0.0004 [-0.0081,+0.0072] p=0.91 -> sin cambio apreciable
+  sin negación               aporte CV +0.0036 [-0.0298,+0.0370] p=0.83 -> sin cambio apreciable
+  sin léxicos                aporte CV +0.0011 [-0.0032,+0.0054] p=0.60 -> sin cambio apreciable
+  sin lemas                  aporte CV -0.0030 [-0.0386,+0.0326] p=0.86 -> sin cambio apreciable
+  sin ortografía             aporte CV +0.0047 [-0.0198,+0.0292] p=0.70 -> sin cambio apreciable
+  sin palabras funcionales   aporte CV +0.0024 [-0.0386,+0.0434] p=0.91 -> sin cambio apreciable
+
+== LinearSVC ==
+  sin repeticiones           aporte CV +0.0001 [-0.0110,+0.0112] p=0.99 -> sin cambio apreciable
+  sin negación               aporte CV -0.0022 [-0.0360,+0.0316] p=0.89 -> sin cambio apreciable
+  sin léxicos                aporte CV +0.0000 [+0.0000,+0.0000] p=1.00 -> sin cambio apreciable
+  sin lemas                  aporte CV +0.0045 [-0.0414,+0.0503] p=0.84 -> sin cambio apreciable
+  sin ortografía             aporte CV +0.0035 [-0.0315,+0.0385] p=0.84 -> sin cambio apreciable
+  sin palabras funcionales   aporte CV -0.0219 [-0.0769,+0.0330] p=0.42 -> tendencia a empeorar (no concluyente)
+
+EFECTO SOBRE EL CORPUS (cuántas reseñas cambia cada paso)
+        step_id  docs_changed_vs_prev  pct_changed_vs_prev  mean_tokens  vocab_train
+        S0_base                     0                  0.0         95.9         5997
+S1_repeticiones                    26                  5.3         95.8         5985
+    S2_negacion                   334                 67.9         95.8         6719
+     S3_lexicos                     0                  0.0         95.8         6719
+       S4_lemas                   492                100.0         95.5         5103
+  S5_ortografia                   443                 90.0         95.5         5090
+ S6_funcionales                   492                100.0         57.2         4914

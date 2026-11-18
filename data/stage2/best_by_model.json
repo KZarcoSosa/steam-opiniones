@@ -1,0 +1,76 @@
+{
+  "overall": {
+    "experiment_id": "C014",
+    "model": "LinearSVC",
+    "dev_macro_f1": 0.7431963470319635,
+    "spec": {
+      "clf": "LinearSVC",
+      "clf_params": {
+        "C": 0.1
+      },
+      "lex_blocks": [],
+      "ngram": [
+        1,
+        2
+      ],
+      "preproc": {},
+      "rep": "binary"
+    }
+  },
+  "by_model": {
+    "LogisticRegression": {
+      "experiment_id": "C008",
+      "dev_macro_f1": 0.7428205597219681,
+      "spec": {
+        "clf": "LogisticRegression",
+        "clf_params": {
+          "C": 0.1
+        },
+        "lex_blocks": [],
+        "ngram": [
+          1,
+          2
+        ],
+        "preproc": {},
+        "rep": "binary"
+      }
+    },
+    "LinearSVC": {
+      "experiment_id": "C014",
+      "dev_macro_f1": 0.7431963470319635,
+      "spec": {
+        "clf": "LinearSVC",
+        "clf_params": {
+          "C": 0.1
+        },
+        "lex_blocks": [],
+        "ngram": [
+          1,
+          2
+        ],
+        "preproc": {},
+        "rep": "binary"
+      }
+    },
+    "MultinomialNB": {
+      "experiment_id": "C030",
+      "dev_macro_f1": 0.7431963470319635,
+      "spec": {
+        "clf": "MultinomialNB",
+        "clf_params": {
+          "alpha": 1.0
+        },
+        "lex_blocks": [],
+        "ngram": [
+          1,
+          1
+        ],
+        "preproc": {
+          "lemmatize": true,
+          "negation": true
+        },
+        "rep": "binary"
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "experiment_id": "C014",
+  "model": "LinearSVC",
+  "spec": {
+    "clf": "LinearSVC",
+    "clf_params": {
+      "C": 0.1
+    },
+    "lex_blocks": [],
+    "ngram": [
+      1,
+      2
+    ],
+    "preproc": {},
+    "rep": "binary"
+  },
+  "trained_on": "train+dev",
+  "labels": [
+    "negative",
+    "positive"
+  ]
+}

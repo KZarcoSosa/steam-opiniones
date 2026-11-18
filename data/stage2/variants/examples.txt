@@ -1,0 +1,81 @@
+EJEMPLOS: la misma reseña en cada paso de la cadena incremental (solo reseñas que cambian en algún paso)
+
+--- document_id=1 | Dota 2 | etiqueta=positive
+  ORIGINAL        : Es un juego que no se ha quedado con la misma dinámica de siempre, con el pasar de los años ha ido innovando con dinámicas de juego nuevas, eso le da un plus interesante en el desenvolvimiento de la partida, en cuanto a jugabilidad tiene un alto performance.
+  S0_base         : es un juego que no se ha quedado con la misma dinámica de siempre con el pasar de los años ha ido innovando con dinámicas de juego nuevas eso le da un plus interesante en el desenvolvimiento de la partida en cuanto a jugabilidad tiene un alto performance
+  S1_repeticiones : es un juego que no se ha quedado con la misma dinámica de siempre con el pasar de los años ha ido innovando con dinámicas de juego nuevas eso le da un plus interesante en el desenvolvimiento de la partida en cuanto a jugabilidad tiene un alto performance  (sin cambio)
+  S2_negacion     : es un juego que no se ha NEG_quedado NEG_con la NEG_misma dinámica de siempre con el pasar de los años ha ido innovando con dinámicas de juego nuevas eso le da un plus interesante en el desenvolvimiento de la partida en cuanto a jugabilidad tiene un alto perfo
+  S3_lexicos      : es un juego que no se ha NEG_quedado NEG_con la NEG_misma dinámica de siempre con el pasar de los años ha ido innovando con dinámicas de juego nuevas eso le da un plus interesante en el desenvolvimiento de la partida en cuanto a jugabilidad tiene un alto perfo  (sin cambio)
+  S4_lemas        : ser uno juego que no el haber NEG_quedar NEG_con el NEG_mismo dinamica de siempre con el pasar de el año haber ir innovar con dinamica de juego nuevo ese el dar uno plus interesante en el desenvolvimiento de el partida en cuanto a jugabilidad tener uno alto pe
+  S5_ortografia   : ser uno juego que no el haber NEG_quemar NEG_con el NEG_mismo dinamica de siempre con el pasar de el año haber ir innovar con dinamica de juego nuevo ese el dar uno plus interesante en el desenvolvimiento de el partida en cuanto a jugabilidad tizne uno alto pe
+  S6_funcionales  : ser juego no haber NEG_quemar NEG_mismo NEG_dinamica siempre pasar año haber ir innovar dinamica juego nuevo dar plus interesante desenvolvimiento partida cuanto jugabilidad tizne alto performance
+
+--- document_id=2 | Dota 2 | etiqueta=positive
+  ORIGINAL        : que gran juego la verdad te enseña a que tu no vales nada, que vas a quedar heraldo toda tu vida, que eres la decepción de tu familia, que debes dejar la carrera universitaria, quedaras solo toda tu vida y.... solo es un buen jugo la verdad lo recomiendo volve
+  S0_base         : que gran juego la verdad te enseña a que tu no vales nada que vas a quedar heraldo toda tu vida que eres la decepción de tu familia que debes dejar la carrera universitaria quedaras solo toda tu vida y solo es un buen jugo la verdad lo recomiendo volvería a ju
+  S1_repeticiones : que gran juego la verdad te enseña a que tu no vales nada que vas a quedar heraldo toda tu vida que eres la decepción de tu familia que debes dejar la carrera universitaria quedaras solo toda tu vida y solo es un buen jugo la verdad lo recomiendo volvería a ju  (sin cambio)
+  S2_negacion     : que gran juego la verdad te enseña a que tu no NEG_vales nada que vas a quedar heraldo toda tu vida que eres la decepción de tu familia que debes dejar la carrera universitaria quedaras solo toda tu vida y solo es un buen jugo la verdad lo recomiendo volvería 
+  S3_lexicos      : que gran juego la verdad te enseña a que tu no NEG_vales nada que vas a quedar heraldo toda tu vida que eres la decepción de tu familia que debes dejar la carrera universitaria quedaras solo toda tu vida y solo es un buen jugo la verdad lo recomiendo volvería   (sin cambio)
+  S4_lemas        : que gran juego el verdad tu enseñar a que tu no NEG_valar nada que va a quedar heraldo todo tu vida que ser el decepcion de tu familia que deber dejar el carrera universitario quedara solo todo tu vida y solo ser uno buen jugo el verdad el recomeir volver a ju
+  S5_ortografia   : que gran juego el verdad tu enseñar a que tu no NEG_valer nada que va a quedar heraldo todo tu vida que tres el decepcion de tu familia que deber dejar el carrera universitario quedara solo todo tu vida y solo ser uno buen jugo el verdad el recomeir volver a j
+  S6_funcionales  : gran juego verdad enseñar no NEG_valer nada va quedar heraldo todo tu vida decepcion familia deber dejar carrera universitario quedara solo todo tu vida solo ser buen jugo verdad recomeir volver jugar otro hora
+
+--- document_id=3 | Dota 2 | etiqueta=negative
+  ORIGINAL        : juego de mierda, lleno de niños ratas toxicos, pero peor es el sistema del juego que no te permite expresarte de forma libre y directa, para colmo cuando bajas de 5k de puntos de conducta no puedes escribir en este jueguito de mierda de quinta, y para rematar 
+  S0_base         : juego de mierda lleno de niños ratas toxicos pero peor es el sistema del juego que no te permite expresarte de forma libre y directa para colmo cuando bajas de 5 k de puntos de conducta no puedes escribir en este jueguito de mierda de quinta y para rematar su 
+  S1_repeticiones : juego de mierda lleno de niños ratas toxicos pero peor es el sistema del juego que no te permite expresarte de forma libre y directa para colmo cuando bajas de 5 k de puntos de conducta no puedes escribir en este jueguito de mierda de quinta y para rematar su   (sin cambio)
+  S2_negacion     : juego de mierda lleno de niños ratas toxicos pero peor es el sistema del juego que no te NEG_permite NEG_expresarte de NEG_forma libre y directa para colmo cuando bajas de 5 k de puntos de conducta no NEG_puedes NEG_escribir en NEG_este jueguito de mierda de q
+  S3_lexicos      : juego de mierda lleno de niños ratas toxicos pero peor es el sistema del juego que no te NEG_permite NEG_expresarte de NEG_forma libre y directa para colmo cuando bajas de 5 k de puntos de conducta no NEG_puedes NEG_escribir en NEG_este jueguito de mierda de q  (sin cambio)
+  S4_lemas        : juego de mierda lleno de niño rata toxico pero peor ser el sistema del juego que no tu NEG_permitir NEG_expresarte de NEG_forma libre y directo para colmo cuando baja de 5k de punto de conducta no NEG_poder NEG_escribir en NEG_este jueguito de mierda de quinta
+  S5_ortografia   : juego de mierda lleno de niño rata toxico pero peor ser el sistema del juego que no tu NEG_permitir NEG_expresarte de NEG_forma libre y directo para colmo cuando baja de 5k de punto de conducta no NEG_poder NEG_escribir en NEG_este jueguito de mierda de quinta
+  S6_funcionales  : juego mierda lleno niño rata toxico peor ser sistema juego no NEG_permitir NEG_expresarte NEG_forma libre directo colmo baja punto conducta no NEG_poder NEG_escribir NEG_este jueguito mierda quinta rematar sistema emparejamiento peor basura emparejar puro puto
+
+--- document_id=4 | Dota 2 | etiqueta=positive
+  ORIGINAL        : Es un excelente Game!!! Entrena la mente, diversas habilidades, técnica, todos los sentidos y agudiza los reflejos, mucha estrategia y concentración.
+  S0_base         : es un excelente game entrena la mente diversas habilidades técnica todos los sentidos y agudiza los reflejos mucha estrategia y concentración
+  S1_repeticiones : es un excelente game entrena la mente diversas habilidades técnica todos los sentidos y agudiza los reflejos mucha estrategia y concentración  (sin cambio)
+  S2_negacion     : es un excelente game entrena la mente diversas habilidades técnica todos los sentidos y agudiza los reflejos mucha estrategia y concentración  (sin cambio)
+  S3_lexicos      : es un excelente game entrena la mente diversas habilidades técnica todos los sentidos y agudiza los reflejos mucha estrategia y concentración  (sin cambio)
+  S4_lemas        : ser uno excelente game entrenar el mente diverso habilidad tecnica todo el sentido y agudizar el reflejo mucho estrategia y concentracion
+  S5_ortografia   : ser uno excelente game entregar el mente diverso habilidades tecnica todo el sentido y agudeza el reflejo mucho estrategia y concentracion
+  S6_funcionales  : ser excelente game entregar mente diverso habilidades tecnica todo sentido agudeza reflejo mucho estrategia concentracion
+
+--- document_id=5 | Dota 2 | etiqueta=positive
+  ORIGINAL        : La comunidad es más tóxica que desayunarse un tecito de cianuro con medialunas. Buen juego
+  S0_base         : la comunidad es más tóxica que desayunarse un tecito de cianuro con medialunas buen juego
+  S1_repeticiones : la comunidad es más tóxica que desayunarse un tecito de cianuro con medialunas buen juego  (sin cambio)
+  S2_negacion     : la comunidad es más tóxica que desayunarse un tecito de cianuro con medialunas buen juego  (sin cambio)
+  S3_lexicos      : la comunidad es más tóxica que desayunarse un tecito de cianuro con medialunas buen juego  (sin cambio)
+  S4_lemas        : el comunidad ser mas toxico que desayunar uno tecito de cianuro con medialuna buen juego
+  S5_ortografia   : el comunidad ser mas toxico que desayunar uno tacito de cianuro con medialuna buen juego
+  S6_funcionales  : comunidad ser mas toxico desayunar tacito cianuro medialuna buen juego
+
+--- document_id=6 | Dota 2 | etiqueta=positive
+  ORIGINAL        : Este juego sera tu antidoto para los dias dificiles y tambien tu veneno para los dias felices
+  S0_base         : este juego sera tu antidoto para los dias dificiles y tambien tu veneno para los dias felices
+  S1_repeticiones : este juego sera tu antidoto para los dias dificiles y tambien tu veneno para los dias felices  (sin cambio)
+  S2_negacion     : este juego sera tu antidoto para los dias dificiles y tambien tu veneno para los dias felices  (sin cambio)
+  S3_lexicos      : este juego sera tu antidoto para los dias dificiles y tambien tu veneno para los dias felices  (sin cambio)
+  S4_lemas        : este juego serar tu antidoto para el dia dificil y tambien tu veneno para el dia feliz
+  S5_ortografia   : este juego serar tu antidoto para el dio dificil y tambien tu veneno para el dio felice
+  S6_funcionales  : este juego serar antidoto dio dificil tambien veneno dio felice
+
+--- document_id=7 | Dota 2 | etiqueta=negative
+  ORIGINAL        : habia escrito una reseña detallada (sin insultos, sin agresiones, solo detallando lo q me parecia) pero steam nunca me deja publicarlas cuando son negativas
+  S0_base         : habia escrito una reseña detallada sin insultos sin agresiones solo detallando lo q me parecia pero steam nunca me deja publicarlas cuando son negativas
+  S1_repeticiones : habia escrito una reseña detallada sin insultos sin agresiones solo detallando lo q me parecia pero steam nunca me deja publicarlas cuando son negativas  (sin cambio)
+  S2_negacion     : habia escrito una reseña detallada sin NEG_insultos sin NEG_agresiones solo detallando lo q me parecia pero steam nunca me NEG_deja NEG_publicarlas NEG_cuando son negativas
+  S3_lexicos      : habia escrito una reseña detallada sin NEG_insultos sin NEG_agresiones solo detallando lo q me parecia pero steam nunca me NEG_deja NEG_publicarlas NEG_cuando son negativas  (sin cambio)
+  S4_lemas        : habia escrito uno reseña detallado sin NEG_insulto sin NEG_agresion solo detallar el q yo pareciar pero steam nunca yo NEG_dejar NEG_publicar NEG_cuando ser negativa
+  S5_ortografia   : hacia escrito uno reseña detallado sin NEG_insulto sin NEG_agresion solo detallado el yo parecidir pero steam nunca yo NEG_dejar NEG_publicar NEG_cuando ser negativo
+  S6_funcionales  : escrito reseña detallado sin NEG_insulto sin NEG_agresion solo detallado parecidir steam nunca NEG_dejar NEG_publicar ser NEG_negativo
+
+--- document_id=8 | Dota 2 | etiqueta=negative
+  ORIGINAL        : malisimo te emparejan con gente de mierda y lo peor recibes reportes de los mismo mierdas que joden la partida es un asco ya ya no era como antes sus emparejamiento
+  S0_base         : malisimo te emparejan con gente de mierda y lo peor recibes reportes de los mismo mierdas que joden la partida es un asco ya ya no era como antes sus emparejamiento
+  S1_repeticiones : malisimo te emparejan con gente de mierda y lo peor recibes reportes de los mismo mierdas que joden la partida es un asco ya no era como antes sus emparejamiento
+  S2_negacion     : malisimo te emparejan con gente de mierda y lo peor recibes reportes de los mismo mierdas que joden la partida es un asco ya no NEG_era NEG_como NEG_antes sus emparejamiento
+  S3_lexicos      : malisimo te emparejan con gente de mierda y lo peor recibes reportes de los mismo mierdas que joden la partida es un asco ya no NEG_era NEG_como NEG_antes sus emparejamiento  (sin cambio)
+  S4_lemas        : malisimo tu emparejar con gente de mierda y el peor recib report de el mismo mierda que jodar el partida ser uno asco ya no ser NEG_como NEG_antes su NEG_emparejamiento
+  S5_ortografia   : malisimo tu emparejar con gente de mierda y el peor recib reporte de el mismo mierda que joven el partida ser uno asco ya no ser NEG_como NEG_antes su NEG_emparejamiento
+  S6_funcionales  : malisimo emparejar gente mierda peor recib reporte mismo mierda joven partida ser asco ya no ser NEG_antes NEG_emparejamiento

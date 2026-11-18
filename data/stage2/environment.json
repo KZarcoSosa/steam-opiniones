@@ -1,0 +1,20 @@
+{
+  "created_utc": "2026-11-13T04:16:25+00:00",
+  "python": "3.12.3",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "scikit-learn": "1.9.1",
+  "pandas": "3.0.6",
+  "numpy": "2.5.4",
+  "scipy": "1.18.1",
+  "spacy": "3.8.16",
+  "spacy_model": "es_core_news_sm 3.8.0",
+  "pyspellchecker": "0.9.1",
+  "openpyxl": "3.1.5",
+  "seed": 0,
+  "cv": "RepeatedStratifiedKFold(n_splits=5, n_repeats=2, random_state=0)",
+  "scoring_for_tuning": "f1_macro",
+  "selection_metric": "macro-F1 en dev (desempate: configuración más simple; luego CV en train)",
+  "labeled_documents_sha256": "9e98714143006be493416888e3a4024070a08e5088af6ad7a155e843249ed41e",
+  "spacy_disponible": true,
+  "nota": "Si spacy_disponible=false, las variantes con spaCy se omitieron y SEL se calculó sin lematizar."
+}

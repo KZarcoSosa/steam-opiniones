@@ -1,0 +1,8 @@
+step_id	file	description	docs_changed_vs_prev	pct_changed_vs_prev	mean_tokens	vocab_train	extra_feature_columns
+S0_base	corpus_S0_base.tsv	tokenización + minúsculas (línea base)	0	0.0	95.9	5997	
+S1_repeticiones	corpus_S1_repeticiones.tsv	normalizar letras alargadas y palabras repetidas	26	5.3	95.8	5985	
+S2_negacion	corpus_S2_negacion.tsv	marcar el alcance de la negación (NEG_)	334	67.9	95.8	6719	
+S3_lexicos	corpus_S3_lexicos.tsv	agregar características de léxicos (SEL, LIWC, emojis, negadores)	0	0.0	95.8	6719	sel,liwc,emoji,negation
+S4_lemas	corpus_S4_lemas.tsv	lematizar con spaCy	492	100.0	95.5	5103	sel,liwc,emoji,negation
+S5_ortografia	corpus_S5_ortografia.tsv	corrección ortográfica (pyspellchecker)	443	90.0	95.5	5090	sel,liwc,emoji,negation
+S6_funcionales	corpus_S6_funcionales.tsv	quitar artículos, preposiciones, conjunciones y pronombres (negadores protegidos)	492	100.0	57.2	4914	sel,liwc,emoji,negation

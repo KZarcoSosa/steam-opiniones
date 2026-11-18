@@ -1,0 +1,19 @@
+classifier	removed_factor	step_id	cv_macro_f1_without	cv_macro_f1_full	contribution_cv	ci_low	ci_high	p	folds_where_factor_helps	verdict	dev_macro_f1_without	dev_macro_f1_full	contribution_dev
+MultinomialNB	repeticiones	S1_repeticiones	0.7966	0.7996	0.0029	-0.0052	0.0111	0.4611	6/25	sin cambio apreciable	0.7432	0.7432	0.0
+MultinomialNB	negación	S2_negacion	0.7734	0.7996	0.0262	-0.0126	0.0649	0.1763	21/25	tendencia a mejorar (no concluyente)	0.7566	0.7432	-0.0134
+MultinomialNB	léxicos	S3_lexicos	0.8014	0.7996	-0.0018	-0.0115	0.008	0.7093	2/25	sin cambio apreciable	0.7432	0.7432	0.0
+MultinomialNB	lemas	S4_lemas	0.7839	0.7996	0.0157	-0.0138	0.0451	0.2827	14/25	tendencia a mejorar (no concluyente)	0.7836	0.7432	-0.0404
+MultinomialNB	ortografía	S5_ortografia	0.7897	0.7996	0.0098	-0.0222	0.0419	0.5317	13/25	tendencia a mejorar (no concluyente)	0.7428	0.7432	0.0004
+MultinomialNB	palabras funcionales	S6_funcionales	0.8112	0.7996	-0.0116	-0.0471	0.0239	0.507	9/25	tendencia a empeorar (no concluyente)	0.7025	0.7432	0.0407
+LogisticRegression	repeticiones	S1_repeticiones	0.7499	0.7494	-0.0004	-0.0081	0.0072	0.9101	2/25	sin cambio apreciable	0.7025	0.7157	0.0133
+LogisticRegression	negación	S2_negacion	0.7459	0.7494	0.0036	-0.0298	0.037	0.8268	13/25	sin cambio apreciable	0.6878	0.7157	0.028
+LogisticRegression	léxicos	S3_lexicos	0.7483	0.7494	0.0011	-0.0032	0.0054	0.5965	2/25	sin cambio apreciable	0.7157	0.7157	0.0
+LogisticRegression	lemas	S4_lemas	0.7524	0.7494	-0.003	-0.0386	0.0326	0.8635	10/25	sin cambio apreciable	0.7289	0.7157	-0.0132
+LogisticRegression	ortografía	S5_ortografia	0.7447	0.7494	0.0047	-0.0198	0.0292	0.695	14/25	sin cambio apreciable	0.7566	0.7157	-0.0408
+LogisticRegression	palabras funcionales	S6_funcionales	0.747	0.7494	0.0024	-0.0386	0.0434	0.9051	14/25	sin cambio apreciable	0.7007	0.7157	0.015
+LinearSVC	repeticiones	S1_repeticiones	0.7388	0.7389	0.0001	-0.011	0.0112	0.9911	4/25	sin cambio apreciable	0.7289	0.7289	0.0
+LinearSVC	negación	S2_negacion	0.7411	0.7389	-0.0022	-0.036	0.0316	0.8942	13/25	sin cambio apreciable	0.6887	0.7289	0.0403
+LinearSVC	léxicos	S3_lexicos	0.7389	0.7389	0.0	0.0	0.0	1.0	0/25	sin cambio apreciable	0.7289	0.7289	0.0
+LinearSVC	lemas	S4_lemas	0.7344	0.7389	0.0045	-0.0414	0.0503	0.8428	12/25	sin cambio apreciable	0.7297	0.7289	-0.0008
+LinearSVC	ortografía	S5_ortografia	0.7354	0.7389	0.0035	-0.0315	0.0385	0.8382	13/25	sin cambio apreciable	0.7428	0.7289	-0.0139
+LinearSVC	palabras funcionales	S6_funcionales	0.7608	0.7389	-0.0219	-0.0769	0.033	0.4185	7/25	tendencia a empeorar (no concluyente)	0.7289	0.7289	0.0
