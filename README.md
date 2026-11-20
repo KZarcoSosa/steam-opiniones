@@ -5,9 +5,9 @@ Buscador de opiniones con el **Modelo de Espacio Vectorial (VSM)** y **similitud
 **Equipo:** Lecanda Castillo Ángel · Ruiz Martinez Erick · Zarco Sosa Kevin
 
 📄 **Reporte Etapa I:** [`docs/reporte.pdf`](docs/reporte.pdf)  
-📄 **Reporte Etapa II:** [`docs/reporte_etapa2.pdf`](docs/reporte_etapa2.pdf) (versión editable: [`docs/reporte_etapa2.docx`](docs/reporte_etapa2.docx))  
-➡️ La documentación de la Etapa II (análisis de sentimiento) está en la [última sección](#etapa-ii--análisis-de-sentimiento-supervisado) de este README.
-**Enunciado:** `05_Opinion_Retrieval_Project_Stage_1.pdf`
+📄 **Reporte Etapa II:** [`docs/reporte_etapa2.pdf`](docs/reporte_etapa2.pdf)   
+ La documentación de la Etapa II (análisis de sentimiento) está en la [última sección](#etapa-ii--análisis-de-sentimiento-supervisado) de este README.
+
 
 ---
 
