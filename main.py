@@ -13,6 +13,15 @@ Interfaz del proyecto (sección 10: comandos claramente separados).
     python main.py demo [--id 416 | --text "..." | --stats]
                                                #    Demostración de la normalización
 
+  Etapa II (análisis de sentimiento)
+    python main.py labels                      # Etiquetas y particiones 70/15/15
+    python main.py features --text "..."       # Preprocesamientos y rasgos de léxico de un texto
+    python main.py experiments                 # Experimentos (solo train y dev)
+    python main.py final-test                  # Evaluación única en test
+    python main.py incremental                 # Impacto incremental de cada preprocesamiento
+    python main.py sentiment predict|metrics|experiments|errors
+    python main.py search --query "..." --sentimiento negativo
+
 Cada comando solo llama al script correspondiente en src/, que también se
 puede ejecutar por separado.
 """
@@ -30,7 +39,7 @@ COMMANDS = {
     "search": "retrieve.py",
     "benchmark": "benchmark.py",
     "casos": "best_worst.py",
-    #python main.py labels # Etapa II: etiquetas y particiones.
+    # Etapa II
     "labels": "sentiment_labels.py",
     "features": "sentiment_features.py",
     "experiments": "sentiment_experiments.py",
