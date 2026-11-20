@@ -1,10 +1,12 @@
-# Recuperación de opiniones de Steam — PLN, Práctica II (Etapa 1)
+# Recuperación de opiniones de Steam — PLN, Práctica II (Etapas I y II)
 
 Buscador de opiniones con el **Modelo de Espacio Vectorial (VSM)** y **similitud coseno** sobre **492 reseñas de Steam en español** de **12 videojuegos**. El usuario escribe un aspecto o experiencia en texto libre y el sistema devuelve el **Top-10** de reseñas más parecidas.
 
 **Equipo:** Lecanda Castillo Ángel · Ruiz Martinez Erick · Zarco Sosa Kevin
 
-📄 **Reporte:** [`docs/reporte.pdf`](docs/reporte.pdf) 
+📄 **Reporte Etapa I:** [`docs/reporte.pdf`](docs/reporte.pdf)  
+📄 **Reporte Etapa II:** [`docs/reporte_etapa2.pdf`](docs/reporte_etapa2.pdf) (versión editable: [`docs/reporte_etapa2.docx`](docs/reporte_etapa2.docx))  
+➡️ La documentación de la Etapa II (análisis de sentimiento) está en la [última sección](#etapa-ii--análisis-de-sentimiento-supervisado) de este README.
 **Enunciado:** `05_Opinion_Retrieval_Project_Stage_1.pdf`
 
 ---
@@ -132,3 +134,57 @@ docs/reporte_etapa1.docx             Reporte en Word (editable)
 docs/GUIA.md                         Explicación detallada del proceso
 tests/test_retrieval.py              Pruebas
 ```
+
+---
+
+# Etapa II — Análisis de sentimiento supervisado
+
+Clasificación de cada reseña como **positive** o **negative** con aprendizaje automático tradicional (scikit-learn), sin LLMs ni modelos generativos. Se reutilizó el mismo corpus de 492 reseñas, con los mismos `review_id` y sin modificar el benchmark de la Etapa I. El reporte completo está en [`docs/reporte_etapa2.pdf`](docs/reporte_etapa2.pdf).
+
+## Resultado
+
+| | Modelo | Configuración | Macro-F1 |
+|---|---|---|---|
+| Selección en dev (C014) | LinearSVC | Tokenización y minúsculas, representación binaria (1,2), `C=0.1` | 0.7432 |
+| **Test (evaluación única, reentrenado con train+dev)** | LinearSVC | Igual | **0.7421** |
+
+En dev, MultinomialNB (C030, lemas + negación) obtuvo 0.7432 y LogisticRegression (C008) 0.7428. Se registraron 58 experimentos.
+
+## Dónde está cada entregable (sección 11 de la Etapa II)
+
+| Entregable | Archivo | Notas |
+|---|---|---|
+| **Código con Pipelines** | [`src/sentiment_labels.py`](src/sentiment_labels.py), [`src/sentiment_features.py`](src/sentiment_features.py), [`src/sentiment_experiments.py`](src/sentiment_experiments.py), [`src/sentiment_final.py`](src/sentiment_final.py), [`src/sentiment_incremental.py`](src/sentiment_incremental.py), [`src/sentiment_app.py`](src/sentiment_app.py) | Etiquetas y particiones · preprocesamiento y léxicos · experimentos · evaluación final · impacto incremental · interfaz |
+| Entorno, semillas y versiones | [`requirements.txt`](requirements.txt), [`data/stage2/environment.json`](data/stage2/environment.json), [`data/stage2/split_report.txt`](data/stage2/split_report.txt) | Semilla 0 en particiones, validación cruzada y modelos |
+| **`labeled_documents.tsv`** | [`data/stage2/labeled_documents.tsv`](data/stage2/labeled_documents.tsv) | `document_id, review, text, rating, label, split` + metadatos. `rating` 1 = positive, 0 = negative |
+| Revisión manual de etiquetas | [`data/stage2/label_audit_sample.tsv`](data/stage2/label_audit_sample.tsv) | 50 reseñas: 30 con señales contradictorias y 20 de control |
+| **`experiments.tsv`** | [`data/stage2/experiments.tsv`](data/stage2/experiments.tsv) | Bitácora completa: normalización, representación, mejora, desbalance, clasificador, hiperparámetros, macro-F1 en CV y en dev, decisión |
+| **`classification_predictions.tsv`** | [`data/stage2/classification_predictions.tsv`](data/stage2/classification_predictions.tsv) | Dev: mejor configuración de cada modelo. Test: `experiment_id = test` |
+| **`classification_metrics.tsv`** | [`data/stage2/classification_metrics.tsv`](data/stage2/classification_metrics.tsv) | Accuracy, macro P/R/F1, métricas por clase y matriz de confusión |
+| Reportes por clase y matrices de confusión | [`data/stage2/dev_reports.txt`](data/stage2/dev_reports.txt), [`data/stage2/test_report.txt`](data/stage2/test_report.txt) | |
+| Errores de dev | [`data/stage2/dev_errors.tsv`](data/stage2/dev_errors.tsv) | El análisis de los 19 errores del modelo seleccionado está en la sección 10 del reporte |
+| Impacto incremental de cada preprocesamiento | [`data/stage2/incremental_ablation.tsv`](data/stage2/incremental_ablation.tsv), [`data/stage2/leave_one_out.tsv`](data/stage2/leave_one_out.tsv), [`data/stage2/incremental_summary.txt`](data/stage2/incremental_summary.txt) | Cadena acumulativa con prueba t corregida (Nadeau y Bengio) y ablación "dejar uno fuera" |
+| Corpus después de cada preprocesamiento | [`data/stage2/variants/`](data/stage2/variants) | `INDEX.tsv` y `examples.txt` |
+| Recursos lingüísticos | [`resources/lexicons/`](resources/lexicons) y sección 6 del reporte | SEL, LIWC 2007 (no se publica por su licencia), léxico de emojis, negación, ortografía y repeticiones |
+| Modelo final | [`models/sentiment/final_pipeline.joblib`](models/sentiment/final_pipeline.joblib), [`models/sentiment/final_config.json`](models/sentiment/final_config.json) | Reentrenado con train+dev |
+| Sentimiento predicho del corpus | [`data/stage2/predicted_sentiment.tsv`](data/stage2/predicted_sentiment.tsv) | `in_sample = no` solo en las reseñas de test |
+| **Reporte** | [`docs/reporte_etapa2.pdf`](docs/reporte_etapa2.pdf), [`docs/reporte_etapa2.docx`](docs/reporte_etapa2.docx) | |
+
+## Comandos de la Etapa II
+
+| Tarea | Comando |
+|---|---|
+| Etiquetas y particiones 70/15/15 (ya generadas) | `python main.py labels` |
+| Ver los preprocesamientos y rasgos de léxico de un texto | `python main.py features --text "No es nada bueno :("` |
+| Experimentos en train y dev (ya ejecutados) | `python main.py experiments` |
+| Evaluación única en test (ya ejecutada; queda bloqueada) | `python main.py final-test` |
+| Impacto incremental de cada preprocesamiento | `python main.py incremental` |
+| **Buscar mostrando el sentimiento predicho** | `python main.py search --query "mala optimización y bajos FPS"` |
+| **Buscar solo opiniones negativas o positivas** | `python main.py search --query "el juego tiene muchos errores" --sentimiento negativo` |
+| Predecir el sentimiento del corpus o de una reseña nueva | `python main.py sentiment predict` · `python main.py sentiment predict --text "No lo recomiendo"` |
+| Métricas por clase y matrices de confusión | `python main.py sentiment metrics` |
+| Bitácora de experimentos | `python main.py sentiment experiments --stage B --top 15` |
+| Errores representativos | `python main.py sentiment errors --split dev -n 10` |
+| Pruebas | `python -m pytest -q tests` |
+
+`labels`, `experiments` y `final-test` se niegan a repetirse para proteger el protocolo (particiones fijas y test usado una sola vez). `resources/lexicons/LIWC2007.dic` no se incluye en el repositorio por su licencia.
